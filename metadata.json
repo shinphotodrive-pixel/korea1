@@ -1,0 +1,6 @@
+{
+  "name": "유라시아 제국과 한반도 거시사 탐색기",
+  "description": "로마 법제부터 EU, 이슬람·오스만 밀레트 자치, 러시아·소련 체제 변천, 중화민국·대만 농지개혁까지 유라시아 제국과 동시대 한반도 역사를 비교 분석하는 심층 인터랙티브 역사 아카이브",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
