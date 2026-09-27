@@ -7,6 +7,7 @@ import { SovietOilChart } from './components/SovietOilChart';
 import { GoldYuanInflationChart } from './components/GoldYuanInflationChart';
 import { ComparisonMatrix } from './components/ComparisonMatrix';
 import { LinearTimelineVisualizer } from './components/LinearTimelineVisualizer';
+import { MacroInsightsModal } from './components/MacroInsightsModal';
 import { DetailModal } from './components/DetailModal';
 
 // Local generated archival image paths
@@ -17,6 +18,7 @@ const LAND_REFORM_IMAGE = '/src/assets/images/east_asia_land_reform_179049375356
 
 export default function App() {
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [isMacroInsightsOpen, setIsMacroInsightsOpen] = useState<boolean>(false);
   const [globalSearch, setGlobalSearch] = useState<string>('');
 
   const selectedEvent = selectedEventId ? HISTORICAL_EVENTS[selectedEventId] ?? null : null;
@@ -88,7 +90,7 @@ export default function App() {
 
           {/* Zone 3: Search input & quick trigger */}
           <div className="flex items-center gap-2">
-            <div className="relative w-44 sm:w-56">
+            <div className="relative w-40 sm:w-52">
               <input
                 type="text"
                 value={globalSearch}
@@ -98,11 +100,14 @@ export default function App() {
               />
               <span className="absolute left-2.5 top-2 text-[10px] text-stone-400">🔍</span>
             </div>
+            {/* Macro History Insights Modal Launch Button */}
             <button
-              onClick={() => scrollTo('timeline')}
-              className="hidden sm:inline-flex px-3 py-1.5 text-xs font-semibold text-white bg-amber-800 rounded-md hover:bg-amber-900 transition-colors whitespace-nowrap cursor-pointer"
+              onClick={() => setIsMacroInsightsOpen(true)}
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-amber-900 hover:bg-amber-950 rounded-md transition-colors whitespace-nowrap cursor-pointer shadow-xs"
             >
-              타임라인 보기
+              <span>💡</span>
+              <span className="hidden sm:inline">거시사 비교 통찰</span>
+              <span className="sm:hidden">통찰</span>
             </button>
           </div>
         </div>
@@ -131,6 +136,23 @@ export default function App() {
                 동시대 한반도가 맞닥뜨린 지정학적 나비효과와 제도 동조화를 입체적으로 탐색합니다.
               </p>
 
+              {/* Action Buttons: Fast access to Modal and Visualizer */}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <button
+                  onClick={() => setIsMacroInsightsOpen(true)}
+                  className="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-stone-50 rounded-lg text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-sm transition-all"
+                >
+                  <span>💡 거시사 비교 통찰(Macro Insights) 보고서 열기</span>
+                  <span className="text-amber-300">→</span>
+                </button>
+                <button
+                  onClick={() => scrollTo('timeline')}
+                  className="px-3.5 py-2 bg-white hover:bg-stone-100 border border-stone-300 rounded-lg text-xs font-semibold text-stone-800 cursor-pointer transition-colors"
+                >
+                  ⏳ 제국 수명 선형 타임라인 보기
+                </button>
+              </div>
+
               {/* Curatorial Metric Strip */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3">
                 <div className="border-l-2 border-stone-300 pl-3">
@@ -148,9 +170,17 @@ export default function App() {
                   <div className="text-lg font-bold font-editorial text-stone-900 mt-0.5">7대 전기</div>
                   <div className="text-[10px] text-stone-400">고조선 ~ 현대 대한민국</div>
                 </div>
-                <div className="border-l-2 border-stone-300 pl-3">
-                  <div className="text-[11px] text-stone-500">체제 거시 교훈</div>
-                  <div className="text-lg font-bold font-editorial text-amber-800 mt-0.5">3대 법칙</div>
+                <div
+                  onClick={() => setIsMacroInsightsOpen(true)}
+                  className="border-l-2 border-amber-800 pl-3 cursor-pointer group hover:bg-amber-50/50 rounded-r transition-colors"
+                >
+                  <div className="text-[11px] text-amber-900 font-semibold flex items-center justify-between">
+                    <span>체제 거시 교훈</span>
+                    <span className="text-[10px] text-amber-700">열기 ↗</span>
+                  </div>
+                  <div className="text-lg font-bold font-editorial text-amber-800 mt-0.5 group-hover:text-amber-950">
+                    3대 법칙
+                  </div>
                   <div className="text-[10px] text-stone-400">법제·재정·외교 주권</div>
                 </div>
               </div>
@@ -766,6 +796,16 @@ export default function App() {
       <DetailModal
         event={selectedEvent}
         onClose={() => setSelectedEventId(null)}
+      />
+
+      {/* MACRO HISTORY INSIGHTS COMPREHENSIVE MODAL */}
+      <MacroInsightsModal
+        isOpen={isMacroInsightsOpen}
+        onClose={() => setIsMacroInsightsOpen(false)}
+        onSelectEventDetail={(eventId) => {
+          setIsMacroInsightsOpen(false);
+          setSelectedEventId(eventId);
+        }}
       />
     </div>
   );

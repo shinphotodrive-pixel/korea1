@@ -95,3 +95,27 @@ export interface TimelineHistoricalPoint {
   modalId?: string;
   koreanConnection: string;
 }
+
+export interface EmpireMacroInsight {
+  id: string;
+  empireName: string;
+  region: 'europe' | 'islam' | 'russia' | 'china_taiwan' | 'korea';
+  lifespan: string;
+  riseCause: string;
+  fallCause: string;
+  institutionalLegacy: string;
+  koreanParallelPeriod: string;
+  koreanDynastyLesson: string;
+  governanceScore: number;
+  economicStabilityScore: number;
+  externalSovereigntyScore: number;
+  synthesisThesis: string;
+}
+
+export interface MacroCrossComparativeTheme {
+  themeTitle: string;
+  keyMotto: string;
+  westernEurasianCase: string;
+  koreanParallelsCase: string;
+  takeawayRule: string;
+}
